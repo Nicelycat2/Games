@@ -1,0 +1,13 @@
+{
+  "name": "lunaar-lite",
+  "version": "1.0.0",
+  "description": "A lite version of the Lunaar Site including only the games.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.22.0"
+}
