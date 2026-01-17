@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lunaar Lite v1.0.0</title>
+    <title>The Sunken Fate V3</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="media/logo.svg" type="image/x-icon" />
     <script
@@ -104,6 +104,449 @@
         background: var(--secondary-color);
         transform: scale(1.05);
       }
+
+      .game-popup-content {
+        flex: 1;
+        position: relative;
+        background: var(--bg-color);
+      }
+
+      .game-popup-content iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .game-popup-loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(146, 130, 251, 0.2);
+        border-top-color: var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .bg-gray-900 {
+        background-color: var(--bg-color) !important;
+      }
+
+      .text-white {
+        color: var(--text-color) !important;
+      }
+
+      .bg-gray-800 {
+        background-color: var(--bg-2-color) !important;
+      }
+
+      .text-gray-400 {
+        color: var(--text-secondary-color) !important;
+      }
+
+      .border-gray-700 {
+        border-color: var(--border-color) !important;
+      }
+
+      .focus\:border-purple-500:focus {
+        border-color: var(--primary-color) !important;
+      }
+
+      .text-purple-500 {
+        color: var(--primary-color) !important;
+      }
+
+      .text-gray-500 {
+        color: var(--text-placeholder-color) !important;
+      }
+
+      .text-red-500 {
+        color: var(--accent-color) !important;
+      }
+
+      .text-green-500 {
+        color: var(--secondary-color) !important;
+      }
+
+      .text-yellow-500 {
+        color: #b263a6 !important;
+      }
+
+      .text-blue-500 {
+        color: var(--primary-color) !important;
+      }
+
+      .bg-red-500 {
+        background-color: var(--accent-color) !important;
+      }
+
+      .bg-green-500 {
+        background-color: var(--secondary-color) !important;
+      }
+
+      .bg-yellow-500 {
+        background-color: #b263a6 !important;
+      }
+
+      .bg-blue-500 {
+        background-color: var(--primary-color) !important;
+      }
+
+      .shadow-purple-500\/50 {
+        box-shadow: 0 0 20px rgba(146, 130, 251, 0.5) !important;
+      }
+
+      .text-gray-500 {
+        color: var(--text-placeholder-color) !important;
+      }
+    </style>
+  </head>
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-9NXH6G254G"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-9NXH6G254G");
+  </script>
+
+  <body class="bg-gray-900 text-white min-h-screen">
+    <div x-data="gamesApp()" x-init="init()">
+      <header class="p-6">
+        <img
+          src="media/logo.svg"
+          alt="The Sunken Fate V3 Logo"
+          class="w-16 h-16 mx-auto mb-4"
+        />
+        <h1 class="text-4xl font-bold text-center">
+          <span>The Sunken Fate V3</span>
+        </h1>
+        <div class="flex text-center justify-center gap-4">
+          <a href="https://discord.gg/MfEnRxxxA" class="text-purple-500 underline"
+            >Join Our Discord</a
+          >
+          <a
+            href="https://docs.lunaar.org/deployment/lite/"
+            class="text-purple-500 underline"
+            >How to deploy your own</a
+          >
+        </div>
+        <p class="text-center mt-2 text-sm">v3</p>
+      </header>
+
+      <main class="container mx-auto p-4 max-w-7xl">
+        <div class="mb-6 space-y-4">
+          <input
+            type="text"
+            x-model="searchQuery"
+            @input="applyFilters()"
+            :placeholder="searchPlaceholder"
+            class="w-full px-4 py-3 bg-gray-800 text-white rounded-2xl border border-gray-700 focus:outline-none focus:border-purple-500 transition"
+          />
+
+          <div class="text-center text-gray-400">
+            <span x-text="filteredGames.length"></span> games available
+          </div>
+        </div>
+
+        <div x-show="loading" class="text-center py-12">
+          <i class="fa-solid fa-spinner fa-spin text-4xl text-purple-500"></i>
+          <p class="mt-4 text-gray-400">Loading games...</p>
+        </div>
+
+        <div
+          x-show="!loading && filteredGames.length === 0"
+          class="text-center py-12"
+        >
+          <i class="fa-solid fa-circle-exclamation text-4xl text-gray-500"></i>
+          <p class="mt-4 text-gray-400">No games found.</p>
+        </div>
+
+        <div
+          x-show="!loading && filteredGames.length > 0"
+          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
+        >
+          <template x-for="(game, index) in filteredGames" :key="index">
+            <div
+              class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-purple-500/50 transition-all hover:scale-105 cursor-pointer"
+              @click="openGame(game)"
+            >
+              <div class="relative aspect-square bg-gray-700">
+                <img
+                  :src="getGameImage(game)"
+                  :alt="game.name"
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div class="absolute top-2 left-2 flex flex-col gap-1">
+                  <span
+                    x-show="game.top"
+                    class="bg-red-500 text-white text-xs px-2 py-1 rounded font-bold"
+                  >
+                    <i class="fa-solid fa-fire"></i> HOT
+                  </span>
+                  <span
+                    x-show="game.new"
+                    class="bg-green-500 text-white text-xs px-2 py-1 rounded font-bold"
+                  >
+                    <i class="fa-solid fa-sparkles"></i> NEW
+                  </span>
+                  <span
+                    x-show="game.exp"
+                    class="bg-yellow-500 text-white text-xs px-2 py-1 rounded font-bold"
+                  >
+                    <i class="fa-solid fa-vial"></i> EXP
+                  </span>
+                  <span
+                    x-show="game.updated"
+                    class="bg-blue-500 text-white text-xs px-2 py-1 rounded font-bold"
+                  >
+                    <i class="fa-solid fa-sparkles"></i> UPDATED
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-3">
+                <p
+                  class="text-sm font-semibold text-center truncate"
+                  x-text="game.name"
+                ></p>
+              </div>
+            </div>
+          </template>
+        </div>
+      </main>
+
+      <div
+        class="game-popup-overlay"
+        x-show="popupOpen"
+        @click.self="closePopup()"
+      >
+        <div class="game-popup-container">
+          <div class="game-popup-header">
+            <div style="width: 36px"></div>
+            <div
+              class="game-popup-title"
+              x-text="currentGame?.name || 'Loading...'"
+            ></div>
+            <div style="display: flex; flex-direction: row; gap: 4px">
+              <button class="game-popup-fullscreen" @click="fullscreenPopup()">
+                <i class="fa-solid fa-expand"></i>
+              </button>
+              <button class="game-popup-close" @click="closePopup()">
+                <i class="fa-solid fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="game-popup-content">
+            <div x-show="gameLoading" class="game-popup-loader"></div>
+            <iframe
+              x-ref="gameFrame"
+              @load="gameLoading = false"
+              style="display: none"
+              x-show="!gameLoading"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        x-show="showWarningModal"
+        x-transition
+      >
+        <div class="bg-gray-800 p-6 rounded-lg max-w-md mx-4">
+          <h2 class="text-xl font-bold mb-4 text-white">Important Notice</h2>
+          <p class="text-gray-300 mb-4">
+            Welcome to The Sunken Fate V3! Remember to sync periodically to keep
+            the games list updated and ensure all games continue working properly.
+          </p>
+          <button
+            @click="showWarningModal = false; localStorage.setItem('warningModalShown', 'true');"
+            class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl"
+          >
+            Got it!
+          </button>
+        </div>
+      </div>
+
+      <footer class="mt-12 py-6 text-center text-gray-500 text-sm">
+        <p>The Sunken Fate V3 - Made with ❤️</p>
+      </footer>
+    </div>
+
+    <script>
+      const cdnUrl = "https://mathcenter.space";
+      const cdnUrl2 = "https://corsproxy.io/?url=";
+
+      function gamesApp() {
+        return {
+          allGames: [],
+          filteredGames: [],
+          searchQuery: "",
+          searchPlaceholder: "Search for games",
+          loading: true,
+          popupOpen: false,
+          gameLoading: true,
+          currentGame: null,
+          showWarningModal: true,
+
+          async init() {
+            this.showWarningModal =
+              !window.location.search.includes("nomodal") &&
+              !localStorage.getItem("warningModalShown");
+
+            console.log(
+              "%cThe Sunken Fate%c V3 - Loading...",
+              "font-size: 16px; background-color: #9282fb; border-radius: 5px 0 0 5px; padding: 4px; font-weight: bold;",
+              "font-size: 16px; background-color: #090810; font-weight: bold; padding: 4px; border-radius: 0 5px 5px 0;"
+            );
+
+            try {
+              const responses = await Promise.allSettled([
+                fetch("./json/games.json").then((r) => r.json()),
+                fetch(cdnUrl2 + "https://mathcenter.space/cdn/all").then((r) =>
+                  r.json()
+                ),
+              ]);
+
+              this.allGames = responses
+                .filter((r) => r.status === "fulfilled")
+                .flatMap((r) => r.value);
+
+              console.log(`Loaded ${this.allGames.length} games`);
+              this.searchPlaceholder = `Search for ${this.allGames.length} games`;
+              this.applyFilters();
+            } catch (error) {
+              console.error("Error loading games:", error);
+            } finally {
+              this.loading = false;
+            }
+          },
+
+          applyFilters() {
+            let filtered = this.allGames;
+
+            if (this.searchQuery) {
+              filtered = filtered.filter((game) =>
+                game.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+              );
+            }
+
+            filtered = [...filtered].sort((a, b) => {
+              if (a.name === "Request a game") return -1;
+              if (b.name === "Request a game") return 1;
+              if (a.new && !b.new) return -1;
+              if (!a.new && b.new) return -1;
+              if (a.top && !b.top) return -1;
+              if (!a.top && b.top) return 1;
+              return 0;
+            });
+
+            this.filteredGames = filtered;
+            this.searchPlaceholder = `Search for ${filtered.length} game${
+              filtered.length !== 1 ? "s" : ""
+            }`;
+          },
+
+          getGameImage(game) {
+            if (game.image?.startsWith("https://")) {
+              return game.image;
+            }
+            if (game.proxy) {
+              return cdnUrl + `/media/games/${game.image}`;
+            } else {
+              const firstSegment = game.url?.split("/")[0] || "";
+              return cdnUrl + `/cdn/${firstSegment}/${game.image}`;
+            }
+          },
+
+          async openGame(game) {
+            console.log("Opening game:", game.name);
+            this.currentGame = game;
+            this.popupOpen = true;
+            this.gameLoading = true;
+
+            await this.$nextTick();
+            const iframe = this.$refs.gameFrame;
+            console.log("Iframe ref:", iframe);
+
+            if (game.url?.includes("jsdelivr")) {
+              try {
+                const response = await fetch(game.url);
+                const html = await response.text();
+                iframe.style.display = "block";
+                iframe.contentDocument.open();
+                iframe.contentDocument.write(html);
+                iframe.contentDocument.close();
+                this.gameLoading = false;
+              } catch (error) {
+                console.error("Error loading jsdelivr content:", error);
+                this.gameLoading = false;
+              }
+            } else if (!game.proxy) {
+              iframe.style.display = "block";
+              iframe.src = cdnUrl + `/cdn/${game.url}/`;
+            } else {
+              iframe.style.display = "block";
+              iframe.src = game.url;
+            }
+          },
+
+          closePopup() {
+            console.log("Closing popup");
+            this.popupOpen = false;
+            this.currentGame = null;
+            this.gameLoading = true;
+
+            const iframe = this.$refs.gameFrame;
+            if (iframe) {
+              iframe.src = "about:blank";
+              iframe.style.display = "none";
+            }
+          },
+
+          fullscreenPopup() {
+            const iframe = this.$refs.gameFrame;
+            if (iframe.requestFullscreen) {
+              iframe.requestFullscreen();
+            } else if (iframe.mozRequestFullScreen) {
+              iframe.mozRequestFullScreen();
+            } else if (iframe.webkitRequestFullscreen) {
+              iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) {
+              iframe.msRequestFullscreen();
+            }
+          },
+        };
+      }
+    </script>
+  </body>
+</html>
 
       .game-popup-content {
         flex: 1;
