@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - The Sunken Fate V3</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap");
+        
+        :root {
+            --primary-color: #ff6600;
+            --secondary-color: #e65c00;
+            --accent-color: #ff0000;
+            --bg-2-color: #1a1a1a;
+            --bg-color: #000000;
+            --text-color: #ff8c00;
+            --text-secondary-color: #ffa500;
+            --border-color: #333333;
+            --font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 102, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 0, 0.05) 0%, transparent 20%);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-container {
+            background: var(--bg-2-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .admin-header {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .admin-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(255, 102, 0, 0.5);
+            margin: 0;
+        }
+
+        .admin-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary-color);
+            margin-top: 10px;
+        }
+
+        .counter-section {
+            background: rgba(255, 102, 0, 0.1);
+            border: 1px solid rgba(255, 102, 0, 0.3);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .counter-label {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(255, 140, 0, 0.3);
+        }
+
+        .back-button {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background: var(--accent-color);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            transform: scale(1.05);
+        }
+
+        .footer-note {
+            font-size: 12px;
+            color: var(--text-secondary-color);
+            margin-top: 30px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1 class="admin-title">🔥 ADMIN PANEL 🔥</h1>
+            <p class="admin-subtitle">Visitor Statistics Dashboard</p>
+        </div>
+
+        <div class="counter-section">
+            <div class="counter-label">📊 Total All-Time Visitors</div>
+            
+            <!-- Your provided counter code -->
+            <div style="margin: 20px 0;">
+                <a href='https://www.free-counters.org/' style="display: none;">https://www.free-Counters.org</a>
+                <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=aac3697a17827feb76b9c30b1d439798f92b3329'></script>
+                <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1486140/t/3"></script>
+            </div>
+        </div>
+
+        <div style="background: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.3); border-radius: 10px; padding: 20px; margin: 20px 0;">
+            <h3 style="color: var(--accent-color); margin-top: 0;">⚠️ Dashboard Notes</h3>
+            <ul style="text-align: left; color: var(--text-secondary-color); font-size: 14px; line-height: 1.6;">
+                <li>This counter tracks all-time visitors across all sessions</li>
+                <li>Data is provided by FreeVisitorCounters.com</li>
+                <li>For more detailed analytics, consider using Google Analytics</li>
+                <li>This page is for administrative viewing only</li>
+            </ul>
+        </div>
+
+        <a href="index.html" class="back-button">← Back to Main Site</a>
+
+        <div class="footer-note">
+            The Sunken Fate V3 - Admin Dashboard | Data refreshes automatically
+        </div>
+    </div>
+
+    <script>
+        // Auto-refresh counter every 5 minutes
+        setInterval(() => {
+            location.reload();
+        }, 300000);
+    </script>
+</body>
+</html>
+
