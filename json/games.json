@@ -4289,5 +4289,12 @@
     "url": "https://cdn.jsdelivr.net/gh/gn-math/html@main/618.html",
     "proxy": false,
     "new": false
+  }, 
+  {
+    "name": "1v100 Skibidi",
+    "url": "1v100skibidi/1v100skibidi.html",
+    "image": "1v100skibidi.png",
+    "new": true,
+    "proxy": false
   }
 ]
