@@ -4296,5 +4296,13 @@
     "image": "1v100skibidi.png",
     "new": true,
     "proxy": false
+  }, 
+  {
+    "name": "1v100 Skibidi",
+    "url": "3dash/3dash.html",
+    "image": "1v100skibidi.png",
+    "new": true,
+    "proxy": false
   }
 ]
+
