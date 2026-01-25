@@ -4299,7 +4299,7 @@
   }, 
   {
     "name": "3d Dash",
-    "url": "3dash/3dash.html",
+    "url": "cdn/3dash/3dash.html",
     "image": "1v100skibidi.png",
     "new": true,
     "proxy": false
